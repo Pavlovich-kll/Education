@@ -1,3 +1,7 @@
+package customClassLoader;
+
+import customClassLoader.CustomClassLoader;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -25,7 +29,7 @@ public class Main {
             NoSuchMethodException, SecurityException, IllegalArgumentException, InvocationTargetException {
 
         CustomClassLoader loader = new CustomClassLoader();
-        Class<?> c = loader.findClass("Test");
+        Class<?> c = loader.findClass("customClassLoader.Test");
         Object ob = c.newInstance();//позволяет создать объект указанного класса
         Method md = c.getMethod("show");
         md.invoke(ob);//принимает объект на котором будет вызываться метод

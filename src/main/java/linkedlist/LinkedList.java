@@ -10,7 +10,7 @@ public class LinkedList implements InterfaceList {
     }
 
     private boolean isEmpty() {
-        return (head == null);
+        return head == null;
     }
 
     private void checkIndex(int index) {
