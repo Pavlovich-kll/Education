@@ -20,10 +20,10 @@ public class ProxyHandler implements InvocationHandler {
     //Значение - мапа, где ключи - списки аргументов, значения - результат кэшируемой функции
     private Map<String, Map<ArrayList<?>, Object>> cache = new HashMap<>();
 
-    public ProxyHandler(Object delegate, String cachePath, CacheType defaultCahceType) {
+    public ProxyHandler(Object delegate, String cachePath, CacheType defaultCacheType) {
         this.delegate = delegate;
         this.cachePath = cachePath;
-        this.defaultCacheType = defaultCahceType;
+        this.defaultCacheType = defaultCacheType;
     }
 
     @Override
