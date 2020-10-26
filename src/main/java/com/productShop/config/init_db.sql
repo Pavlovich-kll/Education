@@ -13,12 +13,31 @@ CREATE TABLE basket
     count           INTEGER  NOT NULL
 );
 
+CREATE TABLE basketList
+(
+    basketID        SERIAL   NOT NULL PRIMARY KEY,
+    userID          CHAR(36) NOT NULL REFERENCES userConsumer (userID),
+    nameProduct     TEXT     NOT NULL,
+    typeName        TEXT    NOT NULL,
+    price           INTEGER  NOT NULL,
+    count           INTEGER  NOT NULL
+);
+
 CREATE TABLE product
 (
     productID       SERIAL   NOT NULL PRIMARY KEY,
     basketID        INTEGER  NOT NULL REFERENCES basket (basketID),
     name            TEXT     NOT NULL,
     type            INTEGER  NOT NULL,
+    price           INTEGER  NOT NULL
+);
+
+CREATE TABLE productList
+(
+    productID       SERIAL   NOT NULL PRIMARY KEY,
+    basketID        INTEGER  NOT NULL REFERENCES basket (basketID),
+    name            TEXT     NOT NULL,
+    type            TEXT     NOT NULL,
     price           INTEGER  NOT NULL
 );
 

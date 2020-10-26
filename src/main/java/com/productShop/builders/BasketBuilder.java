@@ -5,7 +5,7 @@ import com.productShop.models.Basket;
 public class BasketBuilder {
     private Integer basketID;
     private Integer user;
-    private String  product;
+    private Integer product;
     private Integer count;
 
     public BasketBuilder setBasketID(Integer basketID) {
@@ -18,7 +18,7 @@ public class BasketBuilder {
         return this;
     }
 
-    public BasketBuilder setProduct(String product) {
+    public BasketBuilder setProduct(Integer product) {
         this.product = product;
         return this;
     }

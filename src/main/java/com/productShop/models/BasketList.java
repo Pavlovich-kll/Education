@@ -5,17 +5,19 @@ import java.util.Objects;
 public class BasketList {
 
     private Integer basketID;
-    private Integer user;
     private String product;
+    private String typeName;
+    private Integer price;
     private Integer count;
 
     public BasketList() {
     }
 
-    public BasketList(Integer basketID, Integer user, String product, Integer count) {
+    public BasketList(Integer basketID, String product, String typeName, Integer price, Integer count) {
         this.basketID = basketID;
-        this.user = user;
         this.product = product;
+        this.typeName = typeName;
+        this.price = price;
         this.count = count;
     }
 
@@ -27,20 +29,28 @@ public class BasketList {
         this.basketID = basketID;
     }
 
-    public Integer getUser() {
-        return user;
-    }
-
-    public void setUser(Integer user) {
-        this.user = user;
-    }
-
     public String getProduct() {
         return product;
     }
 
     public void setProduct(String product) {
         this.product = product;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 
     public Integer getCount() {
@@ -55,15 +65,16 @@ public class BasketList {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        BasketList basket = (BasketList) o;
-        return basketID.equals(basket.basketID) &&
-                user.equals(basket.user) &&
-                product.equals(basket.product) &&
-                count.equals(basket.count);
+        BasketList that = (BasketList) o;
+        return basketID.equals(that.basketID) &&
+                product.equals(that.product) &&
+                typeName.equals(that.typeName) &&
+                price.equals(that.price) &&
+                count.equals(that.count);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(basketID, user, product, count);
+        return Objects.hash(basketID, product, typeName, price, count);
     }
 }

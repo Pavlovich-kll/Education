@@ -6,13 +6,13 @@ public class Basket {
 
     private Integer basketID;
     private Integer user;
-    private String product;
+    private Integer product;
     private Integer count;
 
     public Basket() {
     }
 
-    public Basket(Integer basketID, Integer user, String product, Integer count) {
+    public Basket(Integer basketID, Integer user, Integer product, Integer count) {
         this.basketID = basketID;
         this.user = user;
         this.product = product;
@@ -35,11 +35,11 @@ public class Basket {
         this.user = user;
     }
 
-    public String getProduct() {
+    public Integer getProduct() {
         return product;
     }
 
-    public void setProduct(String product) {
+    public void setProduct(Integer product) {
         this.product = product;
     }
 

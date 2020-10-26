@@ -1,8 +1,10 @@
 package com.productShop.imlementation;
 
 import com.productShop.builders.BasketBuilder;
+import com.productShop.builders.BasketListBuilder;
 import com.productShop.imlementation.Interface_Imp.BasketInt;
 import com.productShop.models.Basket;
+import com.productShop.models.BasketList;
 import com.productShop.models.User;
 
 import java.sql.*;
@@ -10,10 +12,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class BasketImp implements BasketInt {
-    @Override
-    public Basket getUserBasket(User user) {
-        return null;
-    }
 
     @Override
     public boolean add(Basket basket) {
@@ -22,7 +20,7 @@ public class BasketImp implements BasketInt {
             String sql = "INSERT INTO basket(userID,product,count) VALUES (?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, basket.getUser());
-            preparedStatement.setString(2, basket.getProduct());
+            preparedStatement.setInt(2, basket.getProduct());
             preparedStatement.setInt(3, basket.getCount());
             if (preparedStatement.executeUpdate() > 0) return true;
         } catch (SQLException e) {
@@ -37,7 +35,7 @@ public class BasketImp implements BasketInt {
         try {
             String sql = "delete from basket where product = ? and userID = ? ";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, basket.getProduct());
+            preparedStatement.setInt(1, basket.getBasketID());
             preparedStatement.setInt(2, basket.getUser());
             if (preparedStatement.executeUpdate() > 0) return true;
         } catch (SQLException e) {
@@ -46,7 +44,6 @@ public class BasketImp implements BasketInt {
         return false;
     }
 
-    @Override
     public List<Basket> list() {
         List<Basket> list = new LinkedList<>();
         try {
@@ -55,9 +52,9 @@ public class BasketImp implements BasketInt {
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 Basket basket = new BasketBuilder()
-                        .setUser(resultSet.getInt("userID"))
-                        .setProduct(resultSet.getString("product"))
-                        .setCount(resultSet.getInt("count"))
+                        .setBasketID(resultSet.getInt("userID"))
+                        .setBasketID(resultSet.getInt("product"))
+                        .setBasketID(resultSet.getInt("count"))
                         .build();
                 list.add(basket);
             }
@@ -65,5 +62,29 @@ public class BasketImp implements BasketInt {
             e.printStackTrace();
         }
         return list;
+    }
+
+    @Override
+    public List<BasketList> getBasketList(User user) {
+        List<BasketList> res = new LinkedList<>();
+        try {
+            String sql = "select distinct * from basketlist where userID = ?";
+            PreparedStatement preparedStatement = getConnection().prepareStatement(sql);
+            preparedStatement.setString(1, user.getUserID().toString());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                BasketList uOrder = new BasketListBuilder()
+                        .setBasketID(resultSet.getInt("basketID"))
+                        .setProduct(resultSet.getString("nameProduct"))
+                        .setTypeName(resultSet.getString("typeName"))
+                        .setPrice(resultSet.getInt("price"))
+                        .setCount(resultSet.getInt("count"))
+                        .build();
+                res.add(uOrder);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
     }
 }

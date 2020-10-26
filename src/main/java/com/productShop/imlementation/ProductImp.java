@@ -1,14 +1,17 @@
 package com.productShop.imlementation;
 
 import com.productShop.builders.ProductBuilder;
+import com.productShop.builders.ProductListBuilder;
 import com.productShop.imlementation.Interface_Imp.Interface;
+import com.productShop.imlementation.Interface_Imp.ProductInt;
 import com.productShop.models.Product;
+import com.productShop.models.ProductList;
 
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ProductImp implements Interface<Product> {
+public class ProductImp implements ProductInt {
 
     @Override
     public boolean add(Product product) {
@@ -55,6 +58,28 @@ public class ProductImp implements Interface<Product> {
                         .setPrice(ps.getInt("price"))
                         .build();
                 list.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public List<ProductList> listProducts() {
+        List<ProductList> list = new LinkedList<>();
+        try {
+            Statement statement = getConnection().createStatement();
+            String sql = "select distinct * from productList";
+            ResultSet ps = statement.executeQuery(sql);
+            while (ps.next()) {
+                ProductList productList = new ProductListBuilder()
+                        .setProductID(ps.getInt("productID"))
+                        .setName(ps.getString("name"))
+                        .setType(ps.getString("type"))
+                        .setPrice(ps.getInt("price"))
+                        .build();
+                list.add(productList);
             }
         } catch (SQLException e) {
             e.printStackTrace();

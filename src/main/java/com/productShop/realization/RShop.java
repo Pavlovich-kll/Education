@@ -1,10 +1,8 @@
 package com.productShop.realization;
 
 import com.productShop.builders.BasketBuilder;
-import com.productShop.imlementation.Interface_Imp.Interface;
-import com.productShop.imlementation.ProductImp;
 import com.productShop.models.Basket;
-import com.productShop.models.Product;
+import com.productShop.models.BasketList;
 import com.productShop.util.ScannerConnection;
 
 import java.util.List;
@@ -47,30 +45,24 @@ public class RShop {
     private void addProduct() {
         try {
             RBasket rBasket = new RBasket();
-            Interface<Product> productImp = new ProductImp();
-//            ProductBuilder productBuilder = new ProductBuilder();
             BasketBuilder basketBuilder = new BasketBuilder()
                     .setUser(rUser.getUser().getUserID());
             System.out.println("Список товаров\n---------------------------");
-            productImp.list().forEach(v ->
+            rBasket.getListProducts().forEach(v ->
                     System.out.printf("Номер %d\nНазвание:  %s\nТип: %s\nЦена за шт: %s ",
                             v.getProductID(), v.getName(), v.getType(), v.getPrice()
                                     + " руб\n---------------------------\n"));
-//            rBasket.getListProducts().forEach(v ->
-//                    System.out.printf("Номер %d\nНазвание:  %s\nТип: %s\nЦена за шт: %s ",
-//                            v.getProductID(), v.getName(), v.getType(), v.getPrice()
-//                                    + " руб\n---------------------------\n"));
             System.out.println("Введите номер продукта\n 0)Отмена");
-            String sc = scanner.next();
-            if (sc == null) return;
+            int sc = scanner.nextInt();
+            if (sc == 0) return;
             else basketBuilder.setProduct(sc);
             System.out.println("Введите количество продукта\n 0)Отмена");
-            int sc2 = scanner.nextInt();
-            if (sc2 == 0) return;
-            else basketBuilder.setCount(sc2);
+            sc = scanner.nextInt();
+            if (sc == 0) return;
+            else basketBuilder.setCount(sc);
             System.out.println("1)Оформить заказ\n0)Отмена");
-            int sc3 = scanner.nextInt();
-            if (sc3 == 0) return;
+            sc = scanner.nextInt();
+            if (sc == 0) return;
 
             if (rBasket.addProduct(basketBuilder.build())) System.out.println("Заказ успешно оформлен");
             else System.out.println("Заказ не оформлен");
@@ -80,25 +72,24 @@ public class RShop {
     }
 
     private void deleteProduct() {
-        System.out.println("Введите название продукта");
-//        Product product = new ProductBuilder()
+        System.out.println("Введите номер корзины");
         Basket basket = new BasketBuilder()
-//                .setUser(rUser.getUser().getUserID())
-                .setProduct(scanner.next())
+                .setUser(rUser.getUser().getUserID())
+                .setBasketID(scanner.nextInt())
                 .build();
         if (rBasket.deleteProduct(basket)) System.out.println("Продукт удалён");
-        else System.out.println("Ошибка в имени продукта");
+        else System.out.println("Ошибка ввода корзины");
     }
 
     private void listProducts() {
-        List<Basket> orderList = rBasket.getListProducts();
+        List<BasketList> orderList = rBasket.getUserBasketList(rUser.getUser());
         if (orderList.size() == 0) {
             System.out.println("Корзина пуста\n");
             return;
         }
         System.out.println("Список добавленных продуктов:\n---------------------------");
         orderList.forEach(v ->
-                System.out.printf("UserID %d\nНазвание: %s\nКол-во: \n",
-                        v.getUser(), v.getProduct(), v.getCount()));
+                System.out.printf("Номер %d\nНазвание: %s\nТип: %s\nЦена: %s\nКол-во: \n",
+                        v.getBasketID(), v.getProduct(), v.getTypeName(), v.getPrice(), v.getCount()));
     }
 }

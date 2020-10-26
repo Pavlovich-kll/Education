@@ -2,10 +2,12 @@ package com.productShop.realization;
 
 import com.productShop.imlementation.BasketImp;
 import com.productShop.imlementation.Interface_Imp.BasketInt;
-import com.productShop.imlementation.Interface_Imp.Interface;
+import com.productShop.imlementation.Interface_Imp.ProductInt;
 import com.productShop.imlementation.ProductImp;
 import com.productShop.models.Basket;
-import com.productShop.models.Product;
+import com.productShop.models.BasketList;
+import com.productShop.models.ProductList;
+import com.productShop.models.User;
 
 import java.util.List;
 
@@ -15,7 +17,7 @@ import java.util.List;
  */
 
 public class RBasket {
-//    Interface<Product> productInt = new ProductImp();
+    ProductInt productInt = new ProductImp();
     BasketInt basketInt = new BasketImp();
 
     public boolean addProduct(Basket basket) {
@@ -26,7 +28,11 @@ public class RBasket {
         return basketInt.delete(basket);
     }
 
-    public List<Basket> getListProducts() {
-        return basketInt.list();
+    public List<ProductList> getListProducts() {
+        return productInt.listProducts();
+    }
+
+    public List<BasketList> getUserBasketList(User user) {//вывод списка заказов пользователя
+        return basketInt.getBasketList(user);
     }
 }

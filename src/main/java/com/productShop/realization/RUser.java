@@ -1,8 +1,6 @@
 package com.productShop.realization;
 
 import com.productShop.builders.UserBuilder;
-import com.productShop.imlementation.BasketImp;
-import com.productShop.imlementation.Interface_Imp.BasketInt;
 import com.productShop.imlementation.Interface_Imp.UserInt;
 import com.productShop.imlementation.UserImp;
 import com.productShop.models.User;
@@ -13,7 +11,6 @@ import com.productShop.models.User;
 
 public class RUser {
     private final UserInt userInt = new UserImp();
-    private final BasketInt basketInt = new BasketImp();
     private User user;
 
     public User getUser() {
@@ -22,9 +19,8 @@ public class RUser {
 
     public boolean authorization(User userExpected) {
         try {
-            userExpected = userInt.getUser(userExpected.getLogin());
-//            if (userExpected != null && userExpected.getPassword().equals(user.getPassword())) {
-            if (userExpected != null) {
+            user = userInt.getUser(userExpected.getLogin());
+            if (user != null && userExpected.getPassword().equals(user.getPassword())) {
                 return true;
             }
         } catch (Exception e) {
