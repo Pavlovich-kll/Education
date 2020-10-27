@@ -17,10 +17,10 @@ public class BasketImp implements BasketInt {
     public boolean add(Basket basket) {
         Connection connection = getConnection();
         try {
-            String sql = "INSERT INTO basket(userID,product,count) VALUES (?,?,?)";
+            String sql = "INSERT INTO basket(userID,productID,count) VALUES (?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, basket.getUser());
-            preparedStatement.setInt(2, basket.getProduct());
+            preparedStatement.setInt(2, basket.getProductID());
             preparedStatement.setInt(3, basket.getCount());
             if (preparedStatement.executeUpdate() > 0) return true;
         } catch (SQLException e) {
@@ -33,10 +33,10 @@ public class BasketImp implements BasketInt {
     public boolean delete(Basket basket) {
         Connection connection = getConnection();
         try {
-            String sql = "delete from basket where product = ? and userID = ? ";
+            String sql = "delete from basket where basketid = ? and userID = ? ";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, basket.getBasketID());
-            preparedStatement.setInt(2, basket.getUser());
+            preparedStatement.setString(2, basket.getUser().toString());
             if (preparedStatement.executeUpdate() > 0) return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -53,7 +53,7 @@ public class BasketImp implements BasketInt {
             while (resultSet.next()) {
                 Basket basket = new BasketBuilder()
                         .setBasketID(resultSet.getInt("userID"))
-                        .setBasketID(resultSet.getInt("product"))
+                        .setBasketID(resultSet.getInt("productID"))
                         .setBasketID(resultSet.getInt("count"))
                         .build();
                 list.add(basket);
@@ -73,14 +73,14 @@ public class BasketImp implements BasketInt {
             preparedStatement.setString(1, user.getUserID().toString());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                BasketList uOrder = new BasketListBuilder()
+                BasketList basketList = new BasketListBuilder()
                         .setBasketID(resultSet.getInt("basketID"))
                         .setProduct(resultSet.getString("nameProduct"))
                         .setTypeName(resultSet.getString("typeName"))
                         .setPrice(resultSet.getInt("price"))
                         .setCount(resultSet.getInt("count"))
                         .build();
-                res.add(uOrder);
+                res.add(basketList);
             }
         } catch (SQLException e) {
             e.printStackTrace();

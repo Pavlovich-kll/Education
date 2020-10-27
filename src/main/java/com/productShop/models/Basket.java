@@ -6,16 +6,16 @@ public class Basket {
 
     private Integer basketID;
     private Integer user;
-    private Integer product;
+    private Integer productID;
     private Integer count;
 
     public Basket() {
     }
 
-    public Basket(Integer basketID, Integer user, Integer product, Integer count) {
+    public Basket(Integer basketID, Integer user, Integer productID, Integer count) {
         this.basketID = basketID;
         this.user = user;
-        this.product = product;
+        this.productID = productID;
         this.count = count;
     }
 
@@ -35,12 +35,12 @@ public class Basket {
         this.user = user;
     }
 
-    public Integer getProduct() {
-        return product;
+    public Integer getProductID() {
+        return productID;
     }
 
     public void setProduct(Integer product) {
-        this.product = product;
+        this.productID = productID;
     }
 
     public Integer getCount() {
@@ -58,12 +58,12 @@ public class Basket {
         Basket basket = (Basket) o;
         return basketID.equals(basket.basketID) &&
                 user.equals(basket.user) &&
-                product.equals(basket.product) &&
+                productID.equals(basket.productID) &&
                 count.equals(basket.count);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(basketID, user, product, count);
+        return Objects.hash(basketID, user, productID, count);
     }
 }

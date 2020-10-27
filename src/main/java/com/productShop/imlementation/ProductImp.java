@@ -2,7 +2,6 @@ package com.productShop.imlementation;
 
 import com.productShop.builders.ProductBuilder;
 import com.productShop.builders.ProductListBuilder;
-import com.productShop.imlementation.Interface_Imp.Interface;
 import com.productShop.imlementation.Interface_Imp.ProductInt;
 import com.productShop.models.Product;
 import com.productShop.models.ProductList;
@@ -17,7 +16,7 @@ public class ProductImp implements ProductInt {
     public boolean add(Product product) {
         Connection connection = getConnection();
         try {
-            String sql = "INSERT INTO product (name, type, price) VALUES (?,?,?)";
+            String sql = "INSERT INTO product (nameProduct, typeProduct, price) VALUES (?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, product.getName());
             preparedStatement.setInt(2, product.getType());
@@ -53,8 +52,8 @@ public class ProductImp implements ProductInt {
             while (ps.next()) {
                 Product product = new ProductBuilder()
                         .setProductID(ps.getInt("productID"))
-                        .setName(ps.getString("name"))
-                        .setType(ps.getInt("type"))
+                        .setName(ps.getString("nameProduct"))
+                        .setType(ps.getInt("typeProduct"))
                         .setPrice(ps.getInt("price"))
                         .build();
                 list.add(product);
@@ -75,8 +74,8 @@ public class ProductImp implements ProductInt {
             while (ps.next()) {
                 ProductList productList = new ProductListBuilder()
                         .setProductID(ps.getInt("productID"))
-                        .setName(ps.getString("name"))
-                        .setType(ps.getString("type"))
+                        .setName(ps.getString("nameProduct"))
+                        .setType(ps.getString("typeProduct"))
                         .setPrice(ps.getInt("price"))
                         .build();
                 list.add(productList);

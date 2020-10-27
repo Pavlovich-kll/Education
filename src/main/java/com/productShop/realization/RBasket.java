@@ -20,15 +20,15 @@ public class RBasket {
     ProductInt productInt = new ProductImp();
     BasketInt basketInt = new BasketImp();
 
-    public boolean addProduct(Basket basket) {
+    public boolean addProductBasket(Basket basket) {
         return basketInt.add(basket);
     }
 
-    public boolean deleteProduct(Basket basket) {
+    public boolean deleteProductBasket(Basket basket) {
         return basketInt.delete(basket);
     }
 
-    public List<ProductList> getListProducts() {
+    public List<ProductList> getListProducts() {//вывод списка товаров
         return productInt.listProducts();
     }
 

@@ -25,13 +25,13 @@ public class RShop {
                     case 0:
                         return;
                     case 1:
-                        addProduct();
+                        addProductInBasket();
                         break;
                     case 2:
-                        deleteProduct();
+                        deleteBasket();
                         break;
                     case 3:
-                        listProducts();
+                        listBaskets();
                         break;
                     default:
                         System.out.println("Ошибка ввода команды, повторите действие");
@@ -42,7 +42,7 @@ public class RShop {
         }
     }
 
-    private void addProduct() {
+    private void addProductInBasket() {
         try {
             RBasket rBasket = new RBasket();
             BasketBuilder basketBuilder = new BasketBuilder()
@@ -52,7 +52,7 @@ public class RShop {
                     System.out.printf("Номер %d\nНазвание:  %s\nТип: %s\nЦена за шт: %s ",
                             v.getProductID(), v.getName(), v.getType(), v.getPrice()
                                     + " руб\n---------------------------\n"));
-            System.out.println("Введите номер продукта\n 0)Отмена");
+            System.out.println("Введите название продукта\n 0)Отмена");
             int sc = scanner.nextInt();
             if (sc == 0) return;
             else basketBuilder.setProduct(sc);
@@ -63,26 +63,25 @@ public class RShop {
             System.out.println("1)Оформить заказ\n0)Отмена");
             sc = scanner.nextInt();
             if (sc == 0) return;
-
-            if (rBasket.addProduct(basketBuilder.build())) System.out.println("Заказ успешно оформлен");
+            if (rBasket.addProductBasket(basketBuilder.build())) System.out.println("Заказ успешно оформлен");
             else System.out.println("Заказ не оформлен");
         } catch (Exception e) {
             System.out.println("команда введена неверно: " + e.getMessage());
         }
     }
 
-    private void deleteProduct() {
+    private void deleteBasket() {
         System.out.println("Введите номер корзины");
         Basket basket = new BasketBuilder()
                 .setUser(rUser.getUser().getUserID())
                 .setBasketID(scanner.nextInt())
                 .build();
-        if (rBasket.deleteProduct(basket)) System.out.println("Продукт удалён");
+        if (rBasket.deleteProductBasket(basket)) System.out.println("Продукт удалён");
         else System.out.println("Ошибка ввода корзины");
     }
 
-    private void listProducts() {
-        List<BasketList> orderList = rBasket.getUserBasketList(rUser.getUser());
+    private void listBaskets() {
+        List<BasketList> orderList = rBasket.getUserBasketList(rUser.getUser());;
         if (orderList.size() == 0) {
             System.out.println("Корзина пуста\n");
             return;
