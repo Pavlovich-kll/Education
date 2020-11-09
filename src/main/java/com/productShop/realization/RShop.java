@@ -88,7 +88,7 @@ public class RShop {
         }
         System.out.println("Список добавленных продуктов:\n---------------------------");
         orderList.forEach(v ->
-                System.out.printf("Номер %d\nНазвание: %s\nТип: %s\nЦена: %s\nКол-во: \n",
+                System.out.printf("Номер %d\nНазвание: %s\nТип: %s\nЦена: %s\nКол-во: %d\n",
                         v.getBasketID(), v.getProduct(), v.getTypeName(), v.getPrice(), v.getCount()));
     }
 }
